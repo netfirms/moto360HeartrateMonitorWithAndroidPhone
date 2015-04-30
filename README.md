@@ -1,7 +1,8 @@
 # moto360 Heartrate Monitor with Android Phone
 Use moto360 to detect heartrate and send heartrate value to Android phone.
+Extend from original source: https://github.com/pocmo/SensorDashboard 
 
-![ScreenShot](https://lh6.googleusercontent.com/c6sxZ3FBFrWePdKiTZsACSC3iwZi7AXO6LPt_sS7r4qNJLtdusKBenvrerX7Imwpiv0-crJMx0oZFc8=w1256-h581)
+![ScreenShot](https://lh4.googleusercontent.com/-yR9DoKPUWPc/VUJtcnuKs5I/AAAAAAAAxjQ/Vs8x1cVkCrw/w918-h611-no/DSC02353.JPG)
 
 Functional
 - Monitor user heartrate by moto360.
