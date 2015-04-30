@@ -145,7 +145,9 @@ public class MainActivity extends ActionBarActivity
         private static final String ARG_SECTION_NUMBER = "section_number";
         TextView hrTxt;
         TextView lastSyncTxt;
+        Switch mSwitch;
         long lastMeasurementTime = 0L;
+        boolean isRunning = false;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -166,7 +168,7 @@ public class MainActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            Switch mSwitch = (Switch) rootView.findViewById(R.id.hrSwitch);
+            mSwitch = (Switch) rootView.findViewById(R.id.hrSwitch);
             hrTxt = (TextView) rootView.findViewById(R.id.hrTxt);
             lastSyncTxt = (TextView) rootView.findViewById(R.id.lastSyncTxt);
             mSwitch.setOnCheckedChangeListener(checkBtnChange);
@@ -301,6 +303,10 @@ public class MainActivity extends ActionBarActivity
                     float[] message1 = intent.getFloatArrayExtra("HR");
                     int message2 = intent.getIntExtra("ACCR", 0);
                     int sensorType = intent.getIntExtra("SENSOR_TYPE", 0);
+                    isRunning = intent.getBooleanExtra("IS_RUNNING",false);
+                    if (mSwitch != null) {
+                        mSwitch.setChecked(isRunning);
+                    }
                     if ((message1 != null ) && (sensorType == 21)) {
                         Log.d("Receiver", "Got HR: " + message1[0] + ". Got Accuracy: " + message2);
                         int tmpHr = (int)Math.ceil(message1[0] - 0.5f);
@@ -344,14 +350,14 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onResume() {
         super.onResume();
-        BusProvider.getInstance().register(this);
-        List<Sensor> sensors = RemoteSensorManager.getInstance(this).getSensors();
+        //BusProvider.getInstance().register(this);
+        //List<Sensor> sensors = RemoteSensorManager.getInstance(this).getSensors();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        BusProvider.getInstance().unregister(this);
+        //BusProvider.getInstance().unregister(this);
     }
 
 }

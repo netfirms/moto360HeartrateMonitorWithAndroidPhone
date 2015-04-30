@@ -29,6 +29,7 @@ public class SensorReceiverService extends WearableListenerService {
 
     private RemoteSensorManager sensorManager;
     long startTime;
+    boolean isRunning = false;
 
     @Override
     public void onCreate() {
@@ -74,6 +75,7 @@ public class SensorReceiverService extends WearableListenerService {
     }
 
     private void unpackSensorData(int sensorType, DataMap dataMap) {
+        isRunning = true;
         int accuracy = dataMap.getInt(DataMapKeys.ACCURACY);
         long timestamp = dataMap.getLong(DataMapKeys.TIMESTAMP);
         float[] values = dataMap.getFloatArray(DataMapKeys.VALUES);
@@ -91,6 +93,7 @@ public class SensorReceiverService extends WearableListenerService {
         intent.putExtra("ACCR", accuracy);
         intent.putExtra("TIME", timestamp);
         intent.putExtra("SENSOR_TYPE", sensorType);
+        intent.putExtra("IS_RUNNING", isRunning);
         sendBroadcast(intent);
         sensorManager.addSensorData(sensorType, accuracy, timestamp, values);
     }
