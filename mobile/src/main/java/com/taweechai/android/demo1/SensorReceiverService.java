@@ -61,6 +61,7 @@ public class SensorReceiverService extends WearableListenerService {
         Log.d(TAG, "onDataChanged()");
         for (DataEvent dataEvent : dataEvents) {
             if (dataEvent.getType() == DataEvent.TYPE_CHANGED) {
+                isRunning = true;
                 DataItem dataItem = dataEvent.getDataItem();
                 Uri uri = dataItem.getUri();
                 String path = uri.getPath();
@@ -70,6 +71,8 @@ public class SensorReceiverService extends WearableListenerService {
                             DataMapItem.fromDataItem(dataItem).getDataMap()
                     );
                 }
+            } else {
+                isRunning = false;
             }
         }
     }
@@ -85,6 +88,8 @@ public class SensorReceiverService extends WearableListenerService {
             DatabaseHandler db = new DatabaseHandler(this);
             db.addMonitorData(new MonitorDataModel(0, String.valueOf(sensorType), "anonymous", Arrays.toString(values), String.valueOf(timestamp), String.valueOf(accuracy), String.valueOf(startTime)));
             List<MonitorDataModel> list = db.getAllUserMonitorData();
+        } else {
+            isRunning = false;
         }
         Log.d(TAG,"Broadcast Sensor Value.");
         Intent intent = new Intent();

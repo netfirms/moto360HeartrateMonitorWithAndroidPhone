@@ -148,6 +148,7 @@ public class MainActivity extends ActionBarActivity
         Switch mSwitch;
         long lastMeasurementTime = 0L;
         boolean isRunning = false;
+        boolean isStop = false;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -304,8 +305,16 @@ public class MainActivity extends ActionBarActivity
                     int message2 = intent.getIntExtra("ACCR", 0);
                     int sensorType = intent.getIntExtra("SENSOR_TYPE", 0);
                     isRunning = intent.getBooleanExtra("IS_RUNNING",false);
+                    if (!isRunning) {
+                        //Thread.sleep(3000);
+                        isStop = true;
+                    } else {
+                        isStop = false;
+                    }
                     if (mSwitch != null) {
-                        mSwitch.setChecked(isRunning);
+                        if (isStop) {
+                            mSwitch.setChecked(isRunning);
+                        }
                     }
                     if ((message1 != null ) && (sensorType == 21)) {
                         Log.d("Receiver", "Got HR: " + message1[0] + ". Got Accuracy: " + message2);

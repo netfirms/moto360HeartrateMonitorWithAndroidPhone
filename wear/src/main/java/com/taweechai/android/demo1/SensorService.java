@@ -150,7 +150,7 @@ public class SensorService extends Service implements SensorEventListener {
 
             if (mHeartrateSensor != null) {
                 final int measurementDuration   = 30;   // Seconds
-                final int measurementBreak      = 60;    // Seconds
+                final int measurementBreak      = 300;    // Seconds
 
                 hrScheduler = Executors.newScheduledThreadPool(1);
                 hrScheduler.scheduleAtFixedRate(
